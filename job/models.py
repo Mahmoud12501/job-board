@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 import os
 # Create your models here.
 
@@ -39,5 +40,11 @@ class Job(models.Model):
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     img=models.ImageField(upload_to= upload_img)
     location=models.ForeignKey(Location,on_delete=models.CASCADE)
+    slug=models.SlugField(max_length=100,blank=True,null=True)
+    
+    def save(self,*args,**kwargs):
+        self.slug=slugify(self.title) 
+        super(Job,self).save(*args,**kwargs)
+    
     def __str__(self) -> str:
         return self.title

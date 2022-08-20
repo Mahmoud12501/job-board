@@ -133,7 +133,7 @@
                                             <img style="max-width: 50px; height: auto; " src={{job.img.url}} alt="">
                                         </div>
                                         <div class="jobs_conetent">
-                                            <a href={% url 'jobs:job_detail' job.id %}><h4>{{job.title}}</h4></a>
+                                            <a href={% url 'jobs:job_detail' job.slug %}><h4>{{job.title}}</h4></a>
                                             <div class="links_locat d-flex align-items-center">
                                                 <div class="location">
                                                     <p> <i class="fa fa-map-marker"></i> {{job.location.city}}, {{job.location.countery}}</p>
@@ -147,7 +147,7 @@
                                     <div class="jobs_right">
                                         <div class="apply_now">
                                             <a class="heart_mark" href="#"> <i class="fa fa-heart"></i> </a>
-                                            <a href={% url 'jobs:job_detail' job.id %} class="boxed-btn3">Apply Now</a>
+                                            <a href={% url 'jobs:job_detail' job.slug %} class="boxed-btn3">Apply Now</a>
                                         </div>
                                         <div class="date">
                                             <p>{{job.puplish_date|date:'j M Y'}}</p>

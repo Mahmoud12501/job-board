@@ -13,8 +13,8 @@ def job_list(request):
 
     return render(request,"job/all_job.html",contxt)
 
-def job_detail(request,id):
-    job_detail=Job.objects.get(pk=id)
+def job_detail(request,slug):
+    job_detail=Job.objects.get(slug=slug)
     contxt={"job":job_detail}
 
     return render(request,"job/job_detail.html",contxt)
