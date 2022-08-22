@@ -1,3 +1,6 @@
+from cProfile import label
+from unittest import mock
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
 import os
@@ -7,11 +10,18 @@ job_ty=(
     ('full time','full time'),
     ('part time','part time'),
 )
-
+# help function
 def upload_img(instance,file_name):
     img_name,ext=file_name.split(".")
 
     return "job/%s.%s"%(instance.id,ext)
+
+def validate_file_extension(value):
+    ext=os.path.splitext(value.name)[1]
+    valid_ext=['.pdf']
+    if not ext in valid_ext:
+        raise ValidationError(u'Unsupported file extension.')
+
 
 
 class Category(models.Model):
@@ -48,3 +58,16 @@ class Job(models.Model):
     
     def __str__(self) -> str:
         return self.title
+
+
+class Applicants(models.Model):
+    job=models.ForeignKey(Job,related_name='applay_job',on_delete=models.CASCADE)
+    name=models.CharField(max_length=100)
+    email=models.EmailField()
+    website=models.URLField()
+    cv=models.FileField(validators=[validate_file_extension],upload_to="cv/")
+    coverletter=models.TextField(max_length=500)
+    created_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name
