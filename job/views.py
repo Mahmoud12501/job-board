@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.urls import reverse
 from django.core.paginator import Paginator
-from .models import Job
-from .forms import ApplicantForm
+from .models import Job,Applicants
+from .forms import ApplicantForm,AddJob
 # Create your views here.
 
 def job_list(request):
@@ -27,7 +28,30 @@ def job_detail(request,slug):
             myform.save()
     else:
         form=ApplicantForm()
+        
+    # if request.method=='POST':
+    #     cv= ApplicantForm(request.POST,request.FILES)
+    #     username=request.POST.get('name') 
+    #     email=request.POST.get('email')
+    #     website=request.POST.get('website')
+    #     cv=(request.POST.get('cv'))   
+    #     cover=request.POST.get('cover')
+        
+    #     data=Applicants(job=job_detail,name=username,email=email,website=website,cv=cv,coverletter=cover)
+    #     data.save()
 
     contxt={"job":job_detail,"form":form}
 
     return render(request,"job/job_detail.html",contxt)
+
+def add_job(request):
+    if request.method=='POST':
+       form=AddJob(request.POST,request.FILES)
+       if form.is_valid():
+           myform=form.save(commit=False)
+           myform.owner=request.user
+           myform.save()
+           return redirect(reverse('jobs:job_list'))      
+    else:
+        form=AddJob()
+    return render(request,"job/add_job.html",{'form':form})

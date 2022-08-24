@@ -1,8 +1,7 @@
-from cProfile import label
-from unittest import mock
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
+from django.contrib.auth.models import User
 import os
 # Create your models here.
 
@@ -40,6 +39,7 @@ class Location(models.Model):
 
 class Job(models.Model):
 
+    owner=models.ForeignKey(User,related_name="job_owner",on_delete=models.CASCADE)
     title=models.CharField(max_length=100)
     job_type=models.CharField(max_length=15,choices=job_ty)
     experience=models.IntegerField(default=1)
@@ -68,6 +68,7 @@ class Applicants(models.Model):
     cv=models.FileField(validators=[validate_file_extension],upload_to="cv/")
     coverletter=models.TextField(max_length=500)
     created_at=models.DateTimeField(auto_now=True)
+
 
     def __str__(self) -> str:
         return self.name
