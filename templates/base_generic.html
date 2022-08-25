@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="bradcam_text">
-                        <h3>post job</h3>
+                        <h3>registration</h3>
                     </div>
                 </div>
             </div>
@@ -27,15 +27,13 @@
                     
                     
                     <div class="apply_job_form white-bg">
-                        <h4>post the new job</h4>
+                        
                         <form  method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {% bootstrap_form form %}
-                            {% buttons %}<br>
-                                <div class="submit_btn">
-                                    <button class="boxed-btn3 w-100" type="submit">post Now</button>
-                                </div>
-                            {% endbuttons %}
+                           
+                           {% block content_r %}
+                            
+                           {% endblock content_r %}
+                            
                         </form>
                     </div>
                 </div>
