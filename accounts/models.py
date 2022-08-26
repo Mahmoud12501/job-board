@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 import os
@@ -34,5 +36,12 @@ class Profile(models.Model):
     gender=models.CharField(max_length=20,choices=(('male','male'),('female','female')),null=True,blank=True)
     phone_number= models.CharField(validators=[ RegexValidator(regex=r'^(010|011|012|015)\d{8}$',message="egyption number please")],max_length=11,null=True,blank=True,unique=True)
     
-    def __str__(self) -> str:
-        return self.user
+    def __str__(self) :
+        return str(self.user)
+    
+@receiver(post_save,sender=User)   
+def create_user_profile(sender,instance,created,**kwargs):
+    if created:
+        Profile.objects.create(
+            user=instance
+        )
