@@ -1,23 +1,26 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse
 from django.core.paginator import Paginator
-from .models import Job,Applicants
+from .models import Job
 from .forms import ApplicantForm,AddJob
+from .filters import JobFilter
 # Create your views here.
 
 def job_list(request):
     job_list=Job.objects.all()
+    filter=JobFilter(request.GET,queryset=job_list)
+    job_list=filter.qs
     pagintor=Paginator(job_list,5)
     page_num=request.GET.get('page')
     page_obj=pagintor.get_page(page_num)
 
-    contxt={"jobs":page_obj}
+    contxt={"jobs":page_obj,'myfilter':filter}
 
     return render(request,"job/all_job.html",contxt)
 
 def job_detail(request,slug):
     job_detail=Job.objects.get(slug=slug)
-
+   
     # applay job
     if request.method=='POST':
         form=ApplicantForm(request.POST,request.FILES)
