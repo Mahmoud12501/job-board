@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('job/', include('job.urls',namespace='jobs')),
     path('accounts/', include('accounts.urls',namespace="accounts")),
-
+    path('contact/', include('contact.urls',namespace="contact")),
 ]
 
 urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
