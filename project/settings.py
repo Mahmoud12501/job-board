@@ -39,8 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     "bootstrap4",
-     'django_filters',
+    "bootstrap4",
+    'django_filters',
+    'django_summernote',
+    'rest_framework',
+
   
     #app
     'job',
@@ -148,3 +151,6 @@ EMAIL_HOST_USER = 'mahmoudn12300@gmail.com'
 EMAIL_HOST_PASSWORD = 'mwxyzwsslgvtusoo'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
+
+# Show summernote with Bootstrap4
+SUMMERNOTE_THEME = 'bs4'  

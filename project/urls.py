@@ -21,9 +21,11 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
+    path('summernote/', include('django_summernote.urls')),
     path('job/', include('job.urls',namespace='jobs')),
     path('accounts/', include('accounts.urls',namespace="accounts")),
     path('contact/', include('contact.urls',namespace="contact")),
+    path('api-auth/', include('rest_framework.urls'))
 ]
 
 urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

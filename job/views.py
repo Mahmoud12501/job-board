@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from .models import Job
 from .forms import ApplicantForm,AddJob
 from .filters import JobFilter
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def job_list(request):
@@ -47,6 +48,7 @@ def job_detail(request,slug):
 
     return render(request,"job/job_detail.html",contxt)
 
+@login_required
 def add_job(request):
     if request.method=='POST':
        form=AddJob(request.POST,request.FILES)
